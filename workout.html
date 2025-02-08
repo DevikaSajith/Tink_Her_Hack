@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Period Care</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fce4ec;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            color: #d81b60;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #333;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #c2185b;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8bbd0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Period Care</h2>
+        <label for="painLevel">Cramps Pain Level (1-10):</label>
+        <input type="number" id="painLevel" min="1" max="10" required>
+
+        <label for="cyclePhase">Cycle Phase:</label>
+        <select id="cyclePhase">
+            <option value="menstrual">Menstrual</option>
+            <option value="follicular">Follicular</option>
+            <option value="ovulation">Ovulation</option>
+            <option value="luteal">Luteal</option>
+        </select>
+
+        <label for="symptoms">Other Symptoms:</label>
+        <textarea id="symptoms" rows="3" placeholder="e.g., bloating, fatigue"></textarea>
+
+        <button onclick="generatePlan()">Get Recommendations</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function generatePlan() {
+            const painLevel = document.getElementById('painLevel').value;
+            const cyclePhase = document.getElementById('cyclePhase').value;
+            const symptoms = document.getElementById('symptoms').value.toLowerCase();
+            const resultDiv = document.getElementById('result');
+
+            let dietPlan = "";
+            let workoutPlan = "";
+
+            if (!painLevel) {
+                resultDiv.innerHTML = "<strong>Please enter your pain level.</strong>";
+                return;
+            }
+
+            // Workout Recommendations
+            if (painLevel <= 3) {
+                workoutPlan = "Light cardio like walking or gentle yoga.";
+            } else if (painLevel <= 6) {
+                workoutPlan = "Moderate activities like stretching, pilates, or light cycling.";
+            } else {
+                workoutPlan = "Rest or engage in very light stretching to alleviate discomfort.";
+            }
+
+            if (cyclePhase === "menstrual") {
+                workoutPlan += " Focus on relaxation and breathing exercises.";
+            } else if (cyclePhase === "follicular") {
+                workoutPlan += " This is a great time for strength training and high-energy workouts.";
+            } else if (cyclePhase === "ovulation") {
+                workoutPlan += " Try high-intensity interval training (HIIT) or cardio.";
+            } else if (cyclePhase === "luteal") {
+                workoutPlan += " Engage in moderate exercises like swimming or pilates.";
+            }
+
+            resultDiv.innerHTML = `<br><strong>Your Workout Plan:</strong><br>${workoutPlan}`;
+        }
+    </script>
+</body>
+</html>
